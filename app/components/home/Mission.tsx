@@ -11,10 +11,10 @@ export default function Mission() {
         </p>
       </div>
       <Image
-        src="/butterfly.jpg"
+        src="images/butterfly.png"
         alt="Butterfly representing freedom"
-        width={600}
-        height={400}
+        width={200}
+        height={200}
         className={styles.mission__image}
       />
     </section>

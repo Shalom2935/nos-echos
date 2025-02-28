@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { Menu } from 'lucide-react';
@@ -40,7 +41,13 @@ export default function Header() {
     <header className={styles.header}>
       <div className={styles.header__content}>
         <Link href="/" className={styles.header__logo}>
-          NOS ECHOS
+          <Image
+            src="/images/logo.svg"
+            alt="Nos Echos"
+            width={120}
+            height={40}
+            priority
+          />
         </Link>
 
         <button 

@@ -5,10 +5,10 @@ export default function DataSection() {
   return (
     <section className={styles.data}>
       <Image
-        src="/globe-data.jpg"
+        src="images/earth.jpeg"
         alt="Global data visualization"
-        width={600}
-        height={400}
+        width={300}
+        height={200}
         className={styles.mission__image}
       />
       <div className={styles.data__content}>
