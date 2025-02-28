@@ -28,7 +28,7 @@ export default function TestimonialHero({ onShare }: TestimonialHeroProps) {
       </div>
       <div className={styles.hero__image}>
         <img 
-          src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=400&auto=format&fit=crop"
+          src="/images/testimonial.png"
           alt="Person sharing their story"
           width={400}
           height={400}

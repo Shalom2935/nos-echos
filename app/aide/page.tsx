@@ -34,8 +34,8 @@ export default function AidePage() {
             vous proposer l'aide la plus adaptée.
           </p>
           <img 
-            src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=500&auto=format&fit=crop"
-            alt="Person speaking with megaphone"
+            src="/images/help.png"
+            alt="help image"
             className={styles.hero__image}
           />
         </section>
@@ -155,9 +155,8 @@ export default function AidePage() {
           <div className={styles.form__notice}>
             Seuls votre témoignage et la réponse à la question 1 seront publiés. Toute autre information sera gardée confidentielle
           </div>
-
-          <Button type="submit" className={styles.form__submit}>
-            Témoigner
+          <Button className={styles.form__submit} type="submit">
+            Soumettre mon témoignage
           </Button>
         </form>
       </main>
