@@ -1,0 +1,95 @@
+@import '../styles/variables.scss';
+
+.profile {
+  max-width: 800px;
+  margin: 0 auto;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: $text-color;
+    }
+  }
+}
+
+.form {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  &__avatar {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba($text-color, 0.1);
+
+    > div {
+      flex: 1;
+
+      label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 1rem;
+        color: $text-color;
+      }
+    }
+  }
+
+  &__avatarPreview {
+    width: 100px;
+    height: 100px;
+    font-size: 2rem;
+  }
+
+  &__avatarActions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+
+    button {
+      flex: 1;
+      min-width: 200px;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+
+    @media (max-width: $breakpoint-md) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__field {
+    margin-bottom: 1rem;
+
+    label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: $text-color;
+    }
+  }
+
+  &__submit {
+    width: 100%;
+    margin-top: 2rem;
+    background-color: $primary-color;
+    color: white;
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+  }
+}

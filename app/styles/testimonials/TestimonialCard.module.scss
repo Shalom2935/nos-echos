@@ -1,0 +1,161 @@
+@import '../variables.scss';
+
+.card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  &__author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  &__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__avatarPlaceholder {
+    width: 100%;
+    height: 100%;
+    background-color: $primary-color;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+  &__authorInfo {
+    h3 {
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+      color: rgba($text-color, 0.6);
+    }
+  }
+
+  &__more {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: rgba($text-color, 0.6);
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: rgba($text-color, 0.1);
+    }
+  }
+
+  &__content {
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    color: $text-color;
+  }
+
+  &__footer {
+    display: flex;
+    gap: 1.5rem;
+    color: rgba($text-color, 0.6);
+    border-bottom: 1px solid rgba($text-color, 0.1);
+    padding-bottom: 1rem;
+  }
+
+  &__stat {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: rgba($text-color, 0.1);
+    }
+
+    &_active {
+      color: $primary-color;
+    }
+  }
+
+  &__comments {
+    margin-top: 1rem;
+    padding-top: 1rem;
+  }
+
+  &__comment {
+    padding: 1rem;
+    background-color: rgba($text-color, 0.05);
+    border-radius: 4px;
+    margin-bottom: 1rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__commentHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+  }
+
+  &__commentAvatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__commentAuthor {
+    h4 {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+    }
+
+    p {
+      font-size: 0.8rem;
+      color: rgba($text-color, 0.6);
+    }
+  }
+
+  &__commentContent {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+}

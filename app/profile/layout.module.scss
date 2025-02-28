@@ -1,0 +1,70 @@
+@import '../styles/variables.scss';
+
+.layout {
+  display: flex;
+  min-height: calc(100vh - 80px);
+  padding-top: 80px;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: white;
+  border-right: 1px solid rgba($text-color, 0.1);
+  padding: 2rem 0;
+  position: fixed;
+  top: 80px;
+  bottom: 0;
+  left: 0;
+
+  @media (max-width: $breakpoint-md) {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 100;
+
+    &_open {
+      transform: translateX(0);
+    }
+  }
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0 1rem;
+
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem 1rem;
+    color: $text-color;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: rgba($text-color, 0.05);
+    }
+
+    &_active {
+      background-color: rgba($primary-color, 0.1);
+      color: $primary-color;
+    }
+
+    span {
+      font-weight: 500;
+    }
+  }
+}
+
+.main {
+  flex: 1;
+  margin-left: 250px;
+  padding: 2rem;
+  background-color: #f8f9fa;
+
+  @media (max-width: $breakpoint-md) {
+    margin-left: 0;
+  }
+}
