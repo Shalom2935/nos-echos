@@ -34,8 +34,12 @@ class TestimonialService {
   private testimonials: TestimonialData[];
 
   private constructor() {
-    const storedTestimonials = localStorage.getItem('testimonials');
-    this.testimonials = storedTestimonials ? JSON.parse(storedTestimonials) : [];
+    this.testimonials = [];
+    // Check if window is defined (client-side) before accessing localStorage
+    if (typeof window !== 'undefined') {
+      const storedTestimonials = localStorage.getItem('testimonials');
+      this.testimonials = storedTestimonials ? JSON.parse(storedTestimonials) : [];
+    }
   }
 
   public static getInstance(): TestimonialService {
@@ -46,7 +50,10 @@ class TestimonialService {
   }
 
   private saveToLocalStorage(): void {
-    localStorage.setItem('testimonials', JSON.stringify(this.testimonials));
+    // Check if window is defined (client-side) before accessing localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('testimonials', JSON.stringify(this.testimonials));
+    }
   }
 
   public addTestimonial(content: string): TestimonialData {
