@@ -33,16 +33,13 @@ export default function LoginPage() {
     e.preventDefault();
     setError('');
 
-    // Mock authentication
-    if (
-      (formData.identifier === mockUser.email || formData.identifier === mockUser.profile.pseudo) &&
-      formData.password === mockUser.password
-    ) {
+    // Allow any email and password to access the test profile
+    if (formData.identifier && formData.password) {
       // Simulate storing user data in localStorage
       localStorage.setItem('user', JSON.stringify(mockUser));
       router.push('/profile');
     } else {
-      setError('Identifiants incorrects');
+      setError('Veuillez remplir tous les champs');
     }
   };
 
