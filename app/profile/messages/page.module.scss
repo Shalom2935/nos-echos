@@ -1,45 +1,45 @@
-@import '../../styles/variables.scss';
-
 .messages {
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 2rem;
-  height: calc(100vh - 144px);
-  margin: -2rem;
-  background: white;
-
-  @media (max-width: $breakpoint-md) {
-    grid-template-columns: 1fr;
-  }
-}
-
-.messages__sidebar {
-  border-right: 1px solid rgba($text-color, 0.1);
   display: flex;
-  flex-direction: column;
+  height: calc(100vh - 64px);
+  background: #fff;
+  position: relative;
   overflow: hidden;
-}
 
-.messages__search {
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  border-bottom: 1px solid rgba($text-color, 0.1);
+  &__sidebar {
+    width: 350px;
+    border-right: 1px solid #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    z-index: 10;
 
-  svg {
-    color: rgba($text-color, 0.5);
+    @media (max-width: 768px) {
+      width: 100%;
+      position: absolute;
+      height: 100%;
+      transform: translateX(0);
+      transition: transform 0.3s ease-in-out;
+
+      &_hidden {
+        transform: translateX(-100%);
+      }
+    }
   }
-}
 
-.messages__searchInput {
-  border: none;
-  background: none;
-  padding: 0;
+  &__search {
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 
-  &:focus {
-    outline: none;
-    box-shadow: none;
+    svg {
+      color: #6b7280;
+    }
+  }
+
+  &__searchInput {
+    flex: 1;
   }
 }
 
@@ -47,28 +47,29 @@
   flex: 1;
   overflow-y: auto;
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .conversation {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
   padding: 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  border-radius: 0.5rem;
+  background: transparent;
   width: 100%;
   text-align: left;
-  border: none;
-  background: none;
+  transition: background-color 0.2s;
   position: relative;
 
   &:hover {
-    background-color: rgba($text-color, 0.05);
+    background: #f3f4f6;
   }
 
   &_active {
-    background-color: rgba($primary-color, 0.1);
+    background: #f3f4f6;
   }
 
   &__avatar {
@@ -92,29 +93,31 @@
   &__header {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 0.2rem;
+    align-items: center;
+    margin-bottom: 0.25rem;
 
     h3 {
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.875rem;
+      margin: 0;
     }
 
     span {
-      font-size: 0.8rem;
-      color: rgba($text-color, 0.5);
+      font-size: 0.75rem;
+      color: #6b7280;
     }
   }
 
   &__role {
-    font-size: 0.8rem;
-    color: rgba($text-color, 0.7);
-    margin-bottom: 0.2rem;
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin: 0 0 0.25rem;
   }
 
   &__preview {
-    font-size: 0.85rem;
-    color: rgba($text-color, 0.6);
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -122,40 +125,65 @@
 
   &__unread {
     position: absolute;
-    top: 50%;
     right: 1rem;
+    top: 50%;
     transform: translateY(-50%);
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: $primary-color;
+    background: #3b82f6;
   }
 }
 
 .chat {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  background: #fff;
+
+  @media (max-width: 768px) {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 90vh;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+    border-radius: 1rem 1rem 0 0;
+    box-shadow: 0 -4px 6px -1px rgb(0 0 0 / 0.1);
+    z-index: 20;
+
+    &_active {
+      transform: translateY(0);
+    }
+  }
 
   &__header {
-    padding: 1rem 2rem;
-    border-bottom: 1px solid rgba($text-color, 0.1);
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border-radius: 1rem 1rem 0 0;
+
+    h2 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    p {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin: 0;
+    }
   }
 
   &__user {
     display: flex;
     align-items: center;
     gap: 1rem;
-
-    h2 {
-      font-weight: 600;
-      margin-bottom: 0.2rem;
-    }
-
-    p {
-      font-size: 0.9rem;
-      color: rgba($text-color, 0.6);
-    }
   }
 
   &__avatar {
@@ -167,14 +195,19 @@
 
   &__messages {
     flex: 1;
-    padding: 2rem;
+    padding: 1rem;
     overflow-y: auto;
   }
 
   &__input {
-    padding: 1rem 2rem;
-    border-top: 1px solid rgba($text-color, 0.1);
+    padding: 1rem;
+    border-top: 1px solid #e5e7eb;
     display: flex;
-    gap: 1rem;
+    gap: 0.5rem;
+    background: #fff;
+  }
+
+  &__backButton {
+    transform: rotate(180deg);
   }
 }

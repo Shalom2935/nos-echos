@@ -26,6 +26,15 @@ export default function ProfileLayout({
     <>
       <Header />
       <div className={styles.layout}>
+        <button 
+          className={`${styles.menuToggle} ${isMenuOpen ? styles.menuToggle_open : ''}`} 
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
         <aside className={`${styles.sidebar} ${isMenuOpen ? styles.sidebar_open : ''}`}>
           <nav className={styles.nav}>
             {menuItems.map((item) => {
@@ -37,13 +46,20 @@ export default function ProfileLayout({
                   className={`${styles.nav__link} ${
                     pathname === item.href ? styles.nav__link_active : ''
                   }`}
+                  onClick={() => setIsMenuOpen(false)}
                 >
                   <Icon size={20} />
                   <span>{item.label}</span>
                 </Link>
               );
             })}
-            <button className={styles.nav__link}>
+            <button 
+              className={styles.nav__link}
+              onClick={() => {
+                localStorage.removeItem('user');
+                window.location.href = '/';
+              }}
+            >
               <LogOut size={20} />
               <span>Se déconnecter</span>
             </button>

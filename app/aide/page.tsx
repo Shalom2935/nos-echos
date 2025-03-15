@@ -1,13 +1,17 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import ConfirmationCard from '../components/testimonials/ConfirmationCard';
 import { Button } from '@/components/ui/button';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import styles from './page.module.scss';
 import RootLayout from '../components/layout/RootLayout';
+import TestimonialService from '../services/testimonialService';
 
 export default function AidePage() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     type: '',
     gender: '',
@@ -17,16 +21,45 @@ export default function AidePage() {
     district: '',
     testimony: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log(formData);
+    
+    if (!formData.testimony.trim()) {
+      alert('Veuillez partager votre témoignage avant de soumettre.');
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
+    try {
+      const testimonialService = TestimonialService.getInstance();
+      testimonialService.addTestimonial(formData.testimony);
+      
+      // Reset form and show confirmation
+      setFormData(prev => ({ ...prev, testimony: '' }));
+      setShowConfirmation(true);
+      setIsSubmitting(false);
+    } catch (error) {
+      console.error('Error submitting testimonial:', error);
+      alert('Une erreur s\'est produite lors de la publication de votre témoignage. Veuillez réessayer.');
+      setIsSubmitting(false);
+    }
+  };
+  
+  const handleCloseConfirmation = () => {
+    setShowConfirmation(false);
   };
 
   return (
     <RootLayout>
       <main className={styles.page}>
+        <ConfirmationCard 
+          show={showConfirmation} 
+          onClose={handleCloseConfirmation} 
+        />
         <section className={styles.hero}>
           <h1>Partagez votre histoire, trouvez de l'aide</h1>
           <p>
@@ -149,6 +182,7 @@ export default function AidePage() {
               onChange={(e) => setFormData(prev => ({ ...prev, testimony: e.target.value }))}
               placeholder="Partagez votre histoire..."
               className={styles.form__textarea}
+              required
             />
           </div>
 
@@ -156,8 +190,8 @@ export default function AidePage() {
             Seuls votre témoignage et la réponse à la question 1 seront publiés. Toute autre information sera gardée confidentielle
           </div>
 
-          <Button type="submit" className={styles.form__submit}>
-            Témoigner
+          <Button type="submit" className={styles.form__submit} disabled={isSubmitting}>
+            {isSubmitting ? 'Envoi en cours...' : 'Témoigner'}
           </Button>
         </form>
       </main>

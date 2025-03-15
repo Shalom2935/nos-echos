@@ -58,6 +58,55 @@
   }
 }
 
+.menuToggle {
+  display: none;
+  position: fixed;
+  top: 85px;
+  left: 20px;
+  z-index: 110;
+  width: 35px;
+  height: 35px;
+  background-color: rgba(0, 0, 0, 0.1); /* Changed from transparent to semi-transparent white */
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.3s ease;
+  padding: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Added subtle shadow for better visibility */
+  
+  @media (max-width: $breakpoint-md) {
+    display: flex;
+  }
+  
+  span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background-color: $text-color;
+    transition: all 0.3s ease;
+  }
+  
+  &_open {
+    span {
+      &:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+      
+      &:nth-child(2) {
+        opacity: 0;
+      }
+      
+      &:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+    }
+  }
+}
+
 .main {
   flex: 1;
   margin-left: 250px;

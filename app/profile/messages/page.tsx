@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Conversation } from '@/app/types/conversation';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Search, Send } from 'lucide-react';
+import { Search, Send, ChevronDown } from 'lucide-react';
 import styles from './page.module.scss';
 
 const conversations = [
@@ -30,17 +31,64 @@ const conversations = [
 export default function MessagesPage() {
   const [selectedConversation, setSelectedConversation] = useState(conversations[0]);
   const [message, setMessage] = useState('');
+  const [isMobileViewActive, setIsMobileViewActive] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [startY, setStartY] = useState(0);
+  const [currentY, setCurrentY] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
 
   const handleSend = () => {
     if (!message.trim()) return;
-    // Handle sending message
     console.log('Send message:', message);
     setMessage('');
   };
 
+  const handleConversationSelect = (conversation: Conversation) => {
+    setSelectedConversation(conversation);
+    if (isMobile) {
+      setIsMobileViewActive(true);
+    }
+  };
+
+  const handleBackToList = () => {
+    setIsMobileViewActive(false);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setStartY(e.touches[0].clientY);
+    setIsDragging(true);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging) return;
+    const currentY = e.touches[0].clientY;
+    setCurrentY(currentY);
+  };
+
+  const handleTouchEnd = () => {
+    if (!isDragging) return;
+    const diff = currentY - startY;
+    if (diff > 100) {
+      handleBackToList();
+    }
+    setIsDragging(false);
+    setStartY(0);
+    setCurrentY(0);
+  };
+
   return (
     <div className={styles.messages}>
-      <div className={styles.messages__sidebar}>
+      <div className={`${styles.messages__sidebar} ${isMobileViewActive ? styles.messages__sidebar_hidden : ''}`}>
         <div className={styles.messages__search}>
           <Search size={20} />
           <Input 
@@ -57,7 +105,7 @@ export default function MessagesPage() {
               className={`${styles.conversation} ${
                 selectedConversation.id === conversation.id ? styles.conversation_active : ''
               }`}
-              onClick={() => setSelectedConversation(conversation)}
+              onClick={() => handleConversationSelect(conversation)}
             >
               <div className={styles.conversation__avatar}>
                 <img src={conversation.avatar} alt={conversation.name} />
@@ -76,7 +124,12 @@ export default function MessagesPage() {
         </div>
       </div>
 
-      <div className={styles.chat}>
+      <div 
+        className={`${styles.chat} ${isMobileViewActive ? styles.chat_active : ''}`}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         <div className={styles.chat__header}>
           <div className={styles.chat__user}>
             <img 
@@ -89,6 +142,16 @@ export default function MessagesPage() {
               <p>{selectedConversation.role}</p>
             </div>
           </div>
+          {isMobile && (
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              onClick={handleBackToList}
+              className={styles.chat__backButton}
+            >
+              <ChevronDown size={24} />
+            </Button>
+          )}
         </div>
 
         <div className={styles.chat__messages}>

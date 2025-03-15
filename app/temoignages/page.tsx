@@ -1,14 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import TestimonialHero from '@/app/components/testimonials/TestimonialHero';
 import TestimonialCard from '@/app/components/testimonials/TestimonialCard';
 import { Button } from '@/components/ui/button';
 import styles from '@/app/styles/testimonials/Page.module.scss';
 import RootLayout from '../components/layout/RootLayout';
+import TestimonialService from '../services/testimonialService';
 
-const testimonials = [
+const defaultTestimonials = [
   {
     id: 1,
     author: {
@@ -51,6 +52,18 @@ const testimonials = [
 export default function TemoignagesPage() {
   const router = useRouter();
   const [expandedComments, setExpandedComments] = useState<number[]>([]);
+  const [testimonials, setTestimonials] = useState(defaultTestimonials);
+
+  const testimonialService = TestimonialService.getInstance();
+
+  // No longer need the session storage check since we're using the floating card in the aide page
+
+  useEffect(() => {
+    const storedTestimonials = testimonialService.getAllTestimonials();
+    if (storedTestimonials.length > 0) {
+      setTestimonials(storedTestimonials);
+    }
+  }, []);
 
   const toggleComments = (testimonialId: number) => {
     setExpandedComments(prev => 
@@ -60,14 +73,11 @@ export default function TemoignagesPage() {
     );
   };
 
-  const handleShare = () => {
-    router.push('/aide');
-  };
-
   return (
     <RootLayout>
       <main className={styles.page}>
-        <TestimonialHero onShare={handleShare} />
+
+        <TestimonialHero onShare={() => {}} />
         <section className={styles.testimonials}>
           {testimonials.map((testimonial) => (
             <div key={testimonial.id} className={styles.testimonial__container}>

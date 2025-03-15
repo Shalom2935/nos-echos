@@ -1,6 +1,8 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import styles from '@/app/styles/testimonials/TestimonialHero.module.scss';
 
 interface TestimonialHeroProps {
@@ -8,6 +10,12 @@ interface TestimonialHeroProps {
 }
 
 export default function TestimonialHero({ onShare }: TestimonialHeroProps) {
+  const router = useRouter();
+  
+  const handleShareClick = () => {
+    router.push('/aide');
+  };
+  
   return (
     <section className={styles.hero}>
       <div className={styles.hero__content}>
@@ -21,17 +29,21 @@ export default function TestimonialHero({ onShare }: TestimonialHeroProps) {
         </p>
         <Button 
           className={styles.hero__button}
-          onClick={onShare}
+          onClick={handleShareClick}
         >
           Donner son témoignage
         </Button>
       </div>
       <div className={styles.hero__image}>
-        <img 
-          src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?q=80&w=400&auto=format&fit=crop"
+        <Image 
+          src="/images/testimonial.png"
           alt="Person sharing their story"
-          width={400}
-          height={400}
+          width={800}
+          height={600}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          quality={85}
+          priority
+          className={styles.hero__imageContent}
         />
       </div>
     </section>
