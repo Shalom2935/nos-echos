@@ -6,7 +6,7 @@ export default function BrandInfo() {
     <div className={styles.footer__brand}>
       <div className={styles.footer__logo}>
         <Image
-          src="/images/logo.svg"
+          src="/images/Logo.svg"
           alt="Nos Echos"
           width={120}
           height={40}

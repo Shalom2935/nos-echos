@@ -98,7 +98,7 @@ export default function Header() {
         <div className={styles.header__content}>
           <Link href="/" className={styles.header__logo}>
             <Image
-              src="/images/logo.svg"
+              src="/images/Logo.svg"
               alt="Nos Echos"
               width={120}
               height={40}
